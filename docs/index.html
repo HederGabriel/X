@@ -52,10 +52,12 @@
         // botão voltar (se não estiver na pasta inicial)
         if (path !== "Operação X") {
           const backLi = document.createElement("li");
-          const backLink = document.createElement("span");
+          const backLink = document.createElement("a");
+          backLink.href = "#";
           backLink.textContent = "⬅ Voltar";
           backLink.className = "back";
-          backLink.onclick = () => {
+          backLink.onclick = (e) => {
+            e.preventDefault();
             const parentPath = path.split("/").slice(0, -1).join("/") || "Operação X";
             loadFiles(parentPath);
           };
