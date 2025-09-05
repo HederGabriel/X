@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repositório Investigativo - Eletiva</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -30,7 +31,11 @@
       container.innerHTML = "Carregando...";
 
       try {
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${branch}`);
+        // usamos encodeURIComponent para lidar com espaços/acentos
+        const response = await fetch(
+          `https://api.github.com/repos/${user}/${repo}/contents/${encodeURIComponent(path)}?ref=${branch}`
+        );
+
         if (!response.ok) {
           container.innerHTML = "Erro ao carregar arquivos.";
           return;
