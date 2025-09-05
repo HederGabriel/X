@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repositório Investigativo - Eletiva</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -20,49 +19,77 @@
     Desenvolvido para a Eletiva Criminal • GitHub Pages
   </footer>
 
-<script>
-  const user = "HederGabriel";   // seu usuário do GitHub
-  const repo = "X";              // nome do repositório
-  const branch = "main";         // branch principal
-  const folder = "Operação X";   // pasta que você quer exibir
+  <script>
+    const user = "HederGabriel";  // seu usuário do GitHub
+    const repo = "X";             // nome do repositório
+    const branch = "main";        // branch principal
+    let currentPath = "Operação X"; // pasta inicial
 
-  async function loadFiles() {
-    const container = document.getElementById("file-list");
+    async function loadFiles(path) {
+      const container = document.getElementById("file-list");
+      container.innerHTML = "Carregando...";
 
-    try {
-      const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}?ref=${branch}`);
-      if (!response.ok) {
-        container.innerHTML = "Erro ao carregar arquivos.";
-        return;
+      try {
+        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${branch}`);
+        if (!response.ok) {
+          container.innerHTML = "Erro ao carregar arquivos.";
+          return;
+        }
+
+        const files = await response.json();
+        if (!Array.isArray(files)) {
+          container.innerHTML = "Nenhum arquivo encontrado.";
+          return;
+        }
+
+        const ul = document.createElement("ul");
+
+        // botão voltar (se não estiver na pasta inicial)
+        if (path !== "Operação X") {
+          const backLi = document.createElement("li");
+          const backLink = document.createElement("span");
+          backLink.textContent = "⬅ Voltar";
+          backLink.className = "back";
+          backLink.onclick = () => {
+            const parentPath = path.split("/").slice(0, -1).join("/") || "Operação X";
+            loadFiles(parentPath);
+          };
+          backLi.appendChild(backLink);
+          ul.appendChild(backLi);
+        }
+
+        files.forEach(file => {
+          const li = document.createElement("li");
+          const link = document.createElement("a");
+
+          if (file.type === "dir") {
+            // se for pasta, ao clicar entra nela
+            link.href = "#";
+            link.textContent = "📁 " + file.name;
+            link.onclick = (e) => {
+              e.preventDefault();
+              loadFiles(path + "/" + file.name);
+            };
+          } else {
+            // se for arquivo, abre direto
+            link.href = file.download_url;
+            link.textContent = "📄 " + file.name;
+            link.target = "_blank";
+          }
+
+          li.appendChild(link);
+          ul.appendChild(li);
+        });
+
+        container.innerHTML = "";
+        container.appendChild(ul);
+
+      } catch (error) {
+        container.innerHTML = "Erro ao conectar ao GitHub API.";
       }
-
-      const files = await response.json();
-      if (!Array.isArray(files)) {
-        container.innerHTML = "Nenhum arquivo encontrado.";
-        return;
-      }
-
-      const ul = document.createElement("ul");
-
-      files.forEach(file => {
-        const li = document.createElement("li");
-        const link = document.createElement("a");
-        link.href = file.download_url;
-        link.textContent = file.name;
-        link.target = "_blank";
-        li.appendChild(link);
-        ul.appendChild(li);
-      });
-
-      container.innerHTML = "";
-      container.appendChild(ul);
-
-    } catch (error) {
-      container.innerHTML = "Erro ao conectar ao GitHub API.";
     }
-  }
 
-  loadFiles();
-</script>
+    loadFiles(currentPath);
+  </script>
 </body>
 </html>
