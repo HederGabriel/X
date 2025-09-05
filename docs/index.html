@@ -56,6 +56,11 @@
           backLink.href = "#";
           backLink.textContent = "⬅ Voltar";
           backLink.className = "back";
+
+          // garante cursor de mão e evita seleção do texto
+          backLink.style.cursor = "pointer";
+          backLink.style.userSelect = "none";
+
           backLink.onclick = (e) => {
             e.preventDefault();
             const parentPath = path.split("/").slice(0, -1).join("/") || "Operação X";
@@ -83,6 +88,11 @@
             link.textContent = "📄 " + file.name;
             link.target = "_blank";
           }
+
+          // forçar “mãozinha” em todos os links da lista
+          link.style.cursor = "pointer";
+          link.style.userSelect = "none";
+          link.setAttribute("draggable", "false");
 
           li.appendChild(link);
           ul.appendChild(li);
