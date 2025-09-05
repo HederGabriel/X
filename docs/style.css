@@ -76,12 +76,21 @@ li a:hover {
   text-decoration: underline;
 }
 
-/* Botão voltar */
 .back {
   cursor: pointer;
   color: #444;
   font-weight: bold;
+  display: inline-block; /* agora o span vira “clicável” */
+  padding: 6px 8px;
+  border-radius: 5px;
+  transition: background 0.2s;
 }
+
+.back:hover {
+  background: #f0f0f0;
+  color: #000;
+}
+
 
 /* Loading */
 .loading {
