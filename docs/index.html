@@ -20,49 +20,49 @@
     Desenvolvido para a Eletiva Criminal • GitHub Pages
   </footer>
 
-  <script>
-    const user = "HederGabriel";   // coloque seu usuário do GitHub aqui
-    const repo = "X";             // nome do repositório
-    const branch = "main";        // branch principal
+<script>
+  const user = "HederGabriel";   // seu usuário do GitHub
+  const repo = "X";              // nome do repositório
+  const branch = "main";         // branch principal
+  const folder = "Operação X";   // pasta que você quer exibir
 
-    async function loadFiles() {
-      const container = document.getElementById("file-list");
+  async function loadFiles() {
+    const container = document.getElementById("file-list");
 
-      try {
-        const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/`);
-        if (!response.ok) {
-          container.innerHTML = "Erro ao carregar arquivos.";
-          return;
-        }
-
-        const files = await response.json();
-        if (!Array.isArray(files)) {
-          container.innerHTML = "Nenhum arquivo encontrado.";
-          return;
-        }
-
-        const ul = document.createElement("ul");
-
-        files.forEach(file => {
-          const li = document.createElement("li");
-          const link = document.createElement("a");
-          link.href = file.download_url;
-          link.textContent = file.name;
-          link.target = "_blank";
-
-          li.appendChild(link);
-          ul.appendChild(li);
-        });
-
-        container.innerHTML = "";
-        container.appendChild(ul);
-
-      } catch (error) {
-        container.innerHTML = "Erro ao conectar ao GitHub API.";
+    try {
+      const response = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}?ref=${branch}`);
+      if (!response.ok) {
+        container.innerHTML = "Erro ao carregar arquivos.";
+        return;
       }
-    }
 
-    loadFiles();
-  </script>
+      const files = await response.json();
+      if (!Array.isArray(files)) {
+        container.innerHTML = "Nenhum arquivo encontrado.";
+        return;
+      }
+
+      const ul = document.createElement("ul");
+
+      files.forEach(file => {
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = file.download_url;
+        link.textContent = file.name;
+        link.target = "_blank";
+        li.appendChild(link);
+        ul.appendChild(li);
+      });
+
+      container.innerHTML = "";
+      container.appendChild(ul);
+
+    } catch (error) {
+      container.innerHTML = "Erro ao conectar ao GitHub API.";
+    }
+  }
+
+  loadFiles();
+</script>
 </body>
 </html>
