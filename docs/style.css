@@ -1,60 +1,103 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  color: #333;
+  line-height: 1.6;
 }
+
+/* Cabeçalho */
 header {
-    background: #222;
-    color: #fff;
-    padding: 15px;
-    text-align: center;
+  background: #1e1e1e;
+  color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 3px solid #ffb400;
 }
+
 header h1 {
-    margin: 0;
-    font-size: 22px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
+
+/* Container principal */
 main {
-    max-width: 900px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  max-width: 900px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* Título seção */
 h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #444;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #222;
+  border-left: 4px solid #ffb400;
+  padding-left: 10px;
 }
+
+/* Lista de arquivos */
 ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
+
 li {
-    padding: 8px 10px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
 }
+
+li:hover {
+  background: #f8f8f8;
+}
+
 li a {
-    text-decoration: none;
-    color: #0066cc;
+  text-decoration: none;
+  color: #0066cc;
+  font-weight: 500;
 }
+
 li a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
+
+/* Botão voltar */
+.back {
+  cursor: pointer;
+  color: #444;
+  font-weight: bold;
+}
+
+/* Loading */
 .loading {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #888;
 }
+
+/* Rodapé */
 footer {
-    text-align: center;
-    padding: 15px;
-    margin-top: 20px;
-    font-size: 14px;
-    background: #eee;
-    color: #555;
+  text-align: center;
+  padding: 20px;
+  margin-top: 30px;
+  font-size: 14px;
+  background: #f5f5f5;
+  color: #555;
+  border-top: 1px solid #ddd;
 }
