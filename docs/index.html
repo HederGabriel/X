@@ -7,20 +7,48 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>📂 Repositório Investigativo - Eletiva</h1>
-  </header>
+  <!-- Tela de Login -->
+  <div id="login-screen" style="text-align:center; margin-top:100px;">
+    <h2>🔒 Acesso Restrito</h2>
+    <input type="password" id="password" placeholder="Digite a senha" style="padding:10px; margin:10px; border-radius:5px; border:1px solid #ccc;">
+    <button onclick="checkPassword()" style="padding:10px 20px; border:none; border-radius:5px; background:#1e1e1e; color:#fff; cursor:pointer;">Entrar</button>
+    <p id="error" style="color:red; display:none; margin-top:10px;">Senha incorreta!</p>
+  </div>
 
-  <main>
-    <h2>Arquivos disponíveis</h2>
-    <div id="file-list" class="loading">Carregando arquivos...</div>
-  </main>
+  <!-- Conteúdo protegido -->
+  <div id="content" style="display:none;">
+    <header>
+      <h1>📂 Repositório Investigativo - Eletiva</h1>
+    </header>
 
-  <footer>
-    Desenvolvido para a Eletiva Criminal • GitHub Pages
-  </footer>
+    <main>
+      <h2>Arquivos disponíveis</h2>
+      <div id="file-list" class="loading">Carregando arquivos...</div>
+    </main>
+
+    <footer>
+      Desenvolvido para a Eletiva Criminal • GitHub Pages
+    </footer>
+  </div>
 
   <script>
+    // 🔑 Defina a senha aqui
+    const correctPassword = "minhaSenha123";  
+
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      if (input === correctPassword) {
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        loadFiles(currentPath); // carrega os arquivos após login
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+
+    // ==========================
+    // CÓDIGO ORIGINAL DE LISTAGEM
+    // ==========================
     const user = "HederGabriel";  // seu usuário do GitHub
     const repo = "X";             // nome do repositório
     const branch = "main";        // branch principal
@@ -31,7 +59,6 @@
       container.innerHTML = "Carregando...";
 
       try {
-        // usamos encodeURIComponent para lidar com espaços/acentos
         const response = await fetch(
           `https://api.github.com/repos/${user}/${repo}/contents/${encodeURIComponent(path)}?ref=${branch}`
         );
@@ -57,7 +84,6 @@
           backLink.textContent = "⬅ Voltar";
           backLink.className = "back";
 
-          // garante cursor de mão e evita seleção do texto
           backLink.style.cursor = "pointer";
           backLink.style.userSelect = "none";
 
@@ -75,7 +101,6 @@
           const link = document.createElement("a");
 
           if (file.type === "dir") {
-            // se for pasta, ao clicar entra nela
             link.href = "#";
             link.textContent = "📁 " + file.name;
             link.onclick = (e) => {
@@ -83,13 +108,11 @@
               loadFiles(path + "/" + file.name);
             };
           } else {
-            // se for arquivo, abre direto
             link.href = file.download_url;
             link.textContent = "📄 " + file.name;
             link.target = "_blank";
           }
 
-          // forçar “mãozinha” em todos os links da lista
           link.style.cursor = "pointer";
           link.style.userSelect = "none";
           link.setAttribute("draggable", "false");
@@ -105,8 +128,6 @@
         container.innerHTML = "Erro ao conectar ao GitHub API.";
       }
     }
-
-    loadFiles(currentPath);
   </script>
 </body>
 </html>
