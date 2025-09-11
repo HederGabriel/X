@@ -40,7 +40,7 @@
       if (input === correctPassword) {
         document.getElementById("login-screen").style.display = "none";
         document.getElementById("content").style.display = "block";
-        loadFiles(currentPath); // carrega os arquivos após login
+        loadFiles(currentPath); // só carrega agora
       } else {
         document.getElementById("error").style.display = "block";
       }
