@@ -36,7 +36,7 @@
     const correctPassword = "27122007";  
 
     function checkPassword() {
-      const input = document.getElementById("password").value;
+      const input = document.getElementById("password").value.trim(); // remove espaços extras
       if (input === correctPassword) {
         document.getElementById("login-screen").style.display = "none";
         document.getElementById("content").style.display = "block";
